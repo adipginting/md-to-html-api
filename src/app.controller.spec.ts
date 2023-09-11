@@ -18,10 +18,15 @@ describe('AppController', () => {
 
   describe('root', () => {
     it('should return array of JSON string of HTML Texts', async () => {
-      const expectedValue = '[{Irure consequat magna adipisicing est ullamco nostrud culpa qui.}, {Irure consequat magna adipisicing est ullamco nostrud culpa qui.}, {Irure consequat magna adipisicing est ullamco nostrud culpa qui.}, {Irure consequat magna adipisicing est ullamco nostrud culpa qui.}, {Irure consequat magna adipisicing est ullamco nostrud culpa qui.}]';
+      const expectedFiveValues = '[{Irure consequat magna adipisicing est ullamco nostrud culpa qui.}, {Irure consequat magna adipisicing est ullamco nostrud culpa qui.}, {Irure consequat magna adipisicing est ullamco nostrud culpa qui.}, {Irure consequat magna adipisicing est ullamco nostrud culpa qui.}, {Irure consequat magna adipisicing est ullamco nostrud culpa qui.}]';
+      const expectedOneValue = '[{Irure consequat magna adipisicing est ullamco nostrud culpa qui.}]';
+
       const mockedFunction = jest.spyOn(appService, 'getPosts');
-      mockedFunction.mockResolvedValue(expectedValue);
-      expect(await appController.getPosts(5)).toBe(expectedValue);
+      mockedFunction.mockResolvedValueOnce(expectedFiveValues);
+      mockedFunction.mockResolvedValueOnce(expectedOneValue);
+
+      expect(await appController.getPosts(5)).toBe(expectedFiveValues);
+      expect(await appController.getPosts(1)).toBe(expectedOneValue);
       mockedFunction.mockRestore();
     });
   });

@@ -1,4 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { Post } from '@prisma/client';
+import { Context } from './context';
 
 @Injectable()
 export class AppService {
@@ -6,4 +8,9 @@ export class AppService {
     return '';
   }
 
+  async createPost(post: Post, context: Context): Promise<Post> {
+    return context.prisma.post.create({
+      data: post,
+    });
+  }
 }
